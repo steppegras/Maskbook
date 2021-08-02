@@ -11,7 +11,8 @@
     { "path": "./packages/icons/" },
     { "path": "./packages/plugin-infra" },
     { "path": "./packages/plugins/" },
-    { "path": "./packages/external-plugin-previewer" }
+    { "path": "./packages/external-plugin-previewer" },
+    { "path": "./packages/encryption" }
   ],
   "compilerOptions": {
     /* Basic Options */
