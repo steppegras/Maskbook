@@ -175,6 +175,20 @@ importers:
   packages/empty:
     specifiers: {}
 
+  packages/encryption:
+    specifiers:
+      '@dimensiondev/kit': ^0.0.0-20210712114527-dc8eac6
+      '@masknet/shared-base': workspace:*
+      pvtsutils: ^1.2.0
+      tiny-secp256k1: ^2.0.0
+      ts-results: ^3.3.0
+    dependencies:
+      '@dimensiondev/kit': 0.0.0-20210712114527-dc8eac6
+      '@masknet/shared-base': link:../shared-base
+      pvtsutils: 1.2.0
+      tiny-secp256k1: 2.0.0
+      ts-results: 3.3.0
+
   packages/external-plugin-previewer:
     specifiers:
       '@masknet/theme': workspace:*
@@ -3394,6 +3408,10 @@ packages:
 
   /@dimensiondev/kit/0.0.0-20210630045432-e05621c:
     resolution: {integrity: sha512-RRghCa0HR3NRgGDb3fw6VpvAgCEYs8nFk8M10xXubbXQUgcwp7UVQStI3cm7mV7PTGC1lsaAv2YLTqIQB8w9YA==, tarball: download/@dimensiondev/kit/0.0.0-20210630045432-e05621c/6d03398c21a05c6d7d2e7ffd4b8d5cc435cc9217fd2ddd485c0d08538af1485e}
+    dev: false
+
+  /@dimensiondev/kit/0.0.0-20210712114527-dc8eac6:
+    resolution: {integrity: sha512-WOJx25U1nzsQshfTnZBWx36tbPFEBuzEkfyLFpjkJAslyyenjSqJjBzrNXVlq2WdvSGZTB809iJ7+CIaauMK7w==, tarball: download/@dimensiondev/kit/0.0.0-20210712114527-dc8eac6/288a871d07e75fe2b084e06339896a8c19e23c4685f5dde3e8e7d312c9e75580}
     dev: false
 
   /@dimensiondev/metamask-extension-provider/3.0.6-20210519045409-1835d4d:
@@ -20031,6 +20049,12 @@ packages:
       tslib: 2.3.0
     dev: false
 
+  /pvtsutils/1.2.0:
+    resolution: {integrity: sha512-IDefMJEQl7HX0FP2hIKJFnAR11klP1js2ixCrOaMhe3kXFK6RQ2ABUCuwWaaD4ib0hSbh2fGTICvWJJhDfNecA==}
+    dependencies:
+      tslib: 2.3.0
+    dev: false
+
   /pvutils/1.0.17:
     resolution: {integrity: sha512-wLHYUQxWaXVQvKnwIDWFVKDJku9XDCvyhhxoq8dc5MFdIlRenyPI9eSfEtcvgHgD7FlvCyGAlWgOzRnZD99GZQ==}
     engines: {node: '>=6.0.0'}
@@ -22979,6 +23003,11 @@ packages:
       create-hmac: 1.1.7
       elliptic: 6.5.4
       nan: 2.14.2
+    dev: false
+
+  /tiny-secp256k1/2.0.0:
+    resolution: {integrity: sha512-fL2GZvXKbsXI3cV+uOpEThSiljKwyXOtmGCEh09j+eysTVdPwgei3yogM8BiXMwxDTlMZjQLYpiJLb1gO0vstw==}
+    engines: {node: '>=14.0.0'}
     dev: false
 
   /tiny-warning/1.0.3:
