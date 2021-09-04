@@ -12,6 +12,7 @@ import PoolTogether from '@masknet/web3-constants/data/pooltogether.json'
 import TokenAssetBaseURL from '@masknet/web3-constants/data/token-asset-base-url.json'
 import GoodGhosting from '@masknet/web3-constants/data/good-ghosting.json'
 import OpenseaAPI from '@masknet/web3-constants/data/opensea-api.json'
+import Chain from '@masknet/web3-constants/data/chain.json'
 import { hookTransform, transform, transformFromJSON } from './utils'
 
 export const getAirdropConstants = transform(Airdrop)
@@ -55,6 +56,9 @@ export const useGoodGhostingConstants = hookTransform(getGoodGhostingConstants)
 
 export const getOpenseaAPIConstants = transform(OpenseaAPI)
 export const useOpenseaAPIConstants = hookTransform(getOpenseaAPIConstants)
+
+export const getChainConstants = transform(Chain)
+export const useChainConstants = hookTransform(getChainConstants)
 
 // for estimate gas
 export const FAKE_SIGN_PASSWORD = '0x75466cc969717b172b14253aaeebdc958f2b5037a852c1337650ed4978242dd9'

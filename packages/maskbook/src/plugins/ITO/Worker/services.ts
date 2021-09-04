@@ -1,5 +1,6 @@
 import type { JSON_PayloadInMask, PoolRecord } from '../types'
-import * as subgraph from './apis'
+import * as subgraph from './apis/subgraph'
+import * as chain from './apis/chain'
 import * as database from './database'
 import { getChainDetailed, ChainId } from '@masknet/web3-shared'
 import { currentChainIdSettings } from '../../Wallet/settings'
@@ -16,11 +17,12 @@ export async function getPool(pid: string) {
     return poolFromChain
 }
 
-export async function getAllPoolsAsSeller(address: string, page: number) {
+export async function getAllPoolsAsSeller(address: string, page: number, endBlock: number) {
     const chainId = currentChainIdSettings.value
-    const poolsFromChain = await subgraph.getAllPoolsAsSeller(address, page)
-    const poolsFromDB = await database.getPoolsFromDB(poolsFromChain.map((x) => x.pool.pid))
-    return poolsFromChain
+    const poolsFromSubgraph = await subgraph.getAllPoolsAsSeller(address, page)
+    const poolsFromChain = await chain.getAllPoolsAsSeller(chainId, 8885927, endBlock, address)
+    const poolsFromDB = await database.getPoolsFromDB(poolsFromSubgraph.map((x) => x.pool.pid))
+    return poolsFromSubgraph
         .map((x) => {
             const pool = poolsFromDB.find((y) => y.payload.pid === x.pool.pid)
             if (!pool) return x
