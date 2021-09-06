@@ -3,6 +3,7 @@ import * as subgraph from './apis/subgraph'
 import * as chain from './apis/chain'
 import * as database from './database'
 import { getChainDetailed, ChainId } from '@masknet/web3-shared'
+import type Web3 from 'web3'
 import { currentChainIdSettings } from '../../Wallet/settings'
 
 export async function getTradeInfo(pid: string, trader: string) {
@@ -17,11 +18,15 @@ export async function getPool(pid: string) {
     return poolFromChain
 }
 
-export async function getAllPoolsAsSeller(address: string, page: number, endBlock: number) {
+export async function getAllPoolsAsSeller(address: string, page: number, endBlock: number, web3: Web3) {
     const chainId = currentChainIdSettings.value
     const poolsFromSubgraph = await subgraph.getAllPoolsAsSeller(address, page)
-    const poolsFromChain = await chain.getAllPoolsAsSeller(chainId, 8885927, endBlock, address)
-    const poolsFromDB = await database.getPoolsFromDB(poolsFromSubgraph.map((x) => x.pool.pid))
+    const latestBlockNumberFromSubgraph = getLatestBlockNumberFromSubgraph(poolsFromSubgraph[0].pool, page)
+    const poolsFromChain = latestBlockNumberFromSubgraph
+        ? await chain.getAllPoolsAsSeller(chainId, latestBlockNumberFromSubgraph, endBlock, address, web3)
+        : []
+    console.log({ poolsFromChain, latestBlockNumberFromSubgraph })
+    const poolsFromDB = await database.getAllPoolsAsSeller(poolsFromSubgraph.map((x) => x.pool.pid))
     return poolsFromSubgraph
         .map((x) => {
             const pool = poolsFromDB.find((y) => y.payload.pid === x.pool.pid)
@@ -35,6 +40,10 @@ export async function getAllPoolsAsSeller(address: string, page: number, endBloc
             }
         })
         .filter((x) => x.pool.chain_id === chainId)
+}
+
+function getLatestBlockNumberFromSubgraph(pool: JSON_PayloadInMask | undefined, page: number) {
+    return page === 0 ? (pool?.block_number ? pool.block_number : undefined) : undefined
 }
 
 export async function getAllPoolsAsBuyer(address: string, chainId: ChainId) {

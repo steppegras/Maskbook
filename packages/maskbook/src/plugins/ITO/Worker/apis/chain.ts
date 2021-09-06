@@ -1,11 +1,14 @@
 import { ChainId, getChainConstants, getITOConstants, isSameAddress } from '@masknet/web3-shared'
+import { getTransactionReceipt } from '../../../../extension/background-script/EthereumService'
 import urlcat from 'urlcat'
+import type Web3 from 'web3'
 
 export async function getAllPoolsAsSeller(
     chainId: ChainId,
     startBlock: number,
     endBlock: number,
     sellerAddress: string,
+    web3: Web3,
 ) {
     const { EXPLORER_API, EXPLORER_API_KEY } = getChainConstants(chainId)
     const { ITO2_CONTRACT_ADDRESS } = getITOConstants(chainId)
@@ -25,8 +28,9 @@ export async function getAllPoolsAsSeller(
     )
     if (!response.ok) return null
 
-    const data = await response.json()
-    const result = data.result.filter((v: any) => isSameAddress(v.from, sellerAddress))
-    console.log({ result })
+    const _result: { hash: string }[] = (await response.json()).result
+    const result = _result.filter((v: any) => isSameAddress(v.from, sellerAddress))
+    const a = await getTransactionReceipt(result[0].hash)
+    console.log({ a })
     return null
 }
